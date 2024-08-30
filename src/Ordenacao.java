@@ -15,6 +15,11 @@ public class Ordenacao implements OrdenacaoInterface{
         A[j] = A[j + 1];
         A[j + 1] = temp;
     }
+    public void swapQuick(Filme[] A, int i, int j) {
+        Filme temp = A[i];
+        A[i] = A[j];
+        A[j] = temp;
+    }
     @Override
     public void swap(List<Filme> A, int i, int j){
         Filme temp = A.get(j);
@@ -22,52 +27,47 @@ public class Ordenacao implements OrdenacaoInterface{
         A.add(j + 1, temp);
     }
 
-    public void mergeSort(Filme[] filmes){
-        int n = filmes.length;
-        if (n < 2){
+    public void mergeSort(Filme[] filmes) {
+        if (filmes.length <= 1) {
             return;
         }
-        int midIndex = n / 2;
-        Filme[] leftHalf = new Filme[midIndex];
-        Filme[] rightHalf = new Filme[n - midIndex];
+        int meio = filmes.length / 2;
+        Filme[] esquerda = new Filme[meio];
+        Filme[] direita = new Filme[filmes.length - meio];
 
-        for (int i = 0; i < midIndex; i++)
-            leftHalf[i] = filmes[i];
+        System.arraycopy(filmes, 0, esquerda, 0, meio);
+        System.arraycopy(filmes, meio, direita, 0, filmes.length - meio);
 
-        for (int i = midIndex; i < n; i++)
-            rightHalf[i - midIndex] = filmes[i];
+        mergeSort(esquerda);
+        mergeSort(direita);
 
-        mergeSort(leftHalf);
-        mergeSort(rightHalf);
-
-        merge(filmes, leftHalf, rightHalf);
+        Filme[] resultado = merge(esquerda, direita);
+        System.arraycopy(resultado, 0, filmes, 0, resultado.length);
     }
-    @Override
-    public void merge(Filme[] filmes, Filme[] leftHalf, Filme[] rightHalf){
-        int leftSize = leftHalf.length;
-        int rightSize = rightHalf.length;
+
+    public Filme[] merge(Filme[] esquerda, Filme[] direita) {
+        Filme[] resultado = new Filme[esquerda.length + direita.length];
         int i = 0, j = 0, k = 0;
-        while (i < leftSize && j < rightSize){
-            if (leftHalf[i].compareTo(rightHalf[j]) >= 0){ //return outro < this ? -1 : (outro == this ? 0 : 1);
-                filmes[i] = leftHalf[i];
-                i++;
-            }else{
-                filmes[k] = rightHalf[j];
-                j++;
-            }
-            k++;
-            while (i < leftSize) {
-                filmes[k] = leftHalf[i];
-                i++;
-                k++;
-            }
-            while (j < rightSize){
-                filmes[k] = rightHalf[j];
-                j++;
-                k++;
+
+        while (i < esquerda.length && j < direita.length) {
+            if (esquerda[i].compareTo(direita[j]) <= 0) {
+                resultado[k++] = esquerda[i++];
+            } else {
+                resultado[k++] = direita[j++];
             }
         }
+
+        while (i < esquerda.length) {
+            resultado[k++] = esquerda[i++];
+        }
+
+        while (j < direita.length) {
+            resultado[k++] = direita[j++];
+        }
+
+        return resultado;
     }
+
     public void quickSort(Filme[] filmes, int left, int right) {
         if (left < right) {
             int pivotIndex = partition(filmes, left, right);
@@ -84,18 +84,32 @@ public class Ordenacao implements OrdenacaoInterface{
         }
     }
     @Override
-    public int partition(Filme[] filmes, int left, int right){
+    public int partition(Filme[] filmes, int left, int right) {
         Filme pivot = filmes[left];
         int i = left + 1;
         int j = right;
-        while ( i <= j ) {
-            if ( filmes[i].compareTo(pivot) >= 0 ) i++; //return outro < this ? -1 : (outro == this ? 0 : outro > this = 1) ;
-            else if ( filmes[j].compareTo(pivot) < 0 ) j--;
-            else swap(filmes, i, j);
+
+        while (i <= j) {
+            // Encontra o primeiro elemento à direita que deve ser à esquerda do pivô
+            while (i <= j && filmes[i].compareTo(pivot) < 0) {
+                i++;
+            }
+            // Encontra o primeiro elemento à esquerda que deve ser à direita do pivô
+            while (i <= j && filmes[j].compareTo(pivot) >= 0) {
+                j--;
+            }
+            // Se ainda houver elementos a serem trocados
+            if (i < j) {
+                swapQuick(filmes, i, j);
+                i++;
+                j--;
+            }
         }
-        swap(filmes, left, j);
+        // Posiciona o pivô na posição correta
+        swapQuick(filmes, left, j);
         return j;
     }
+
     @Override
     public int partition(List<Filme> filmes, int left, int right){
         Filme pivot = filmes.get(left);

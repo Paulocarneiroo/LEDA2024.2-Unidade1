@@ -12,6 +12,7 @@ public class Main {
         Filme f10 = new Filme("J", 6, 2023);
 
         Filme[] filmes = {f1, f2, f3, f4, f5, f6, f7, f8, f9, f10};
+        System.out.println("Array original");
         for (Filme f : filmes){
             System.out.println(f);
         }
@@ -21,6 +22,7 @@ public class Main {
         Filme[] filmesCloneBuble = filmes.clone();
         Ordenacao ordenacao = new Ordenacao();
         ordenacao.bubbleSort(filmesCloneBuble);
+        System.out.println("BubleSort");
         for (Filme f : filmesCloneBuble){
             System.out.println(f);
         }
@@ -29,6 +31,7 @@ public class Main {
         System.out.println();
         Filme[] filmesMerge = filmes.clone();
         ordenacao.mergeSort(filmesMerge);
+        System.out.println("MergeSort");
         for (Filme f : filmesMerge){
             System.out.println(f);
         }
@@ -37,6 +40,7 @@ public class Main {
         System.out.println();
         Filme[] filmesQuick = filmes.clone();
         ordenacao.quickSort(filmesQuick, 0, filmesQuick.length - 1);
+        System.out.println("Quicksort");
         for (Filme f : filmesQuick){
             System.out.println(f);
         }

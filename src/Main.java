@@ -17,16 +17,28 @@ public class Main {
         }
         System.out.println();
 
-        Filme[] filmesBuble = Ordenacao.bubbleSort(filmes);
-        for (Filme bOrdenado : filmesBuble){
-            System.out.println(bOrdenado);
+        //BubbleSort
+        Filme[] filmesCloneBuble = filmes.clone();
+        Ordenacao ordenacao = new Ordenacao();
+        ordenacao.bubbleSort(filmesCloneBuble);
+        for (Filme f : filmesCloneBuble){
+            System.out.println(f);
         }
 
+        //mergeSort
         System.out.println();
-        Filme[] filmesClone = filmes.clone();
-        Ordenacao.mergeSort(filmesClone);
+        Filme[] filmesMerge = filmes.clone();
+        ordenacao.mergeSort(filmesMerge);
+        for (Filme f : filmesMerge){
+            System.out.println(f);
+        }
 
-        int result = f1.compareTo(f2);
-        System.out.println(result);
+        //quickSort
+        System.out.println();
+        Filme[] filmesQuick = filmes.clone();
+        ordenacao.quickSort(filmesQuick, 0, filmesQuick.length - 1);
+        for (Filme f : filmesQuick){
+            System.out.println(f);
+        }
     }
 }

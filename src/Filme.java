@@ -1,4 +1,4 @@
-public class Filme implements Comparable<Filme>{
+public class Filme implements Filme_IF{
     private String nome;
     private int nota;
     private int ano;
@@ -45,7 +45,7 @@ public class Filme implements Comparable<Filme>{
     }
 
     @Override
-    public int compareTo(Filme outroFilme) {
+    public int compareTo(Filme_IF outroFilme) {
         // Primeiro critério: Nota (decrescente) return x < y ? -1 : (x == y ? 0 : 1);
         int notaComparacao = Integer.compare(outroFilme.getNota(), this.nota);
         if (notaComparacao != 0) {

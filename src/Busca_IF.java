@@ -1,7 +1,3 @@
-/*
- * Interface para implementação da classe "Busca".
- * Os métodos booleanos devem retornar 'false' se 'notas' não estiver no vetor 'filmes'.
- */
 public interface Busca_IF {
     boolean checaVetorOrdenado(Filme[] filmes);
 

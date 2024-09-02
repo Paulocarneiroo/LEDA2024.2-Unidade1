@@ -58,7 +58,6 @@ public class Main {
             System.out.println(YELLOW + f + RESET);
         }
 
-        /*
         //QuickSortRandom
         System.out.println();
         List<Filme> filmesQuickRandom = new ArrayList<>();
@@ -70,6 +69,14 @@ public class Main {
         for (Filme f : filmesQuick){
             System.out.println(CYAN + f + RESET);
         }
-        */
+
+        //CountingSort
+        System.out.println();
+        Filme[] filmesCounting = filmes.clone();
+        ordenacao.countingSort(filmesCounting, 10);
+        System.out.println(WHITE + "CountingSort" + RESET);
+        for (Filme f : filmesCounting){
+            System.out.println(WHITE + f + RESET);
+        }
     }
 }
